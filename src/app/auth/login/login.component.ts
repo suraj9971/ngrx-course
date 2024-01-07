@@ -8,6 +8,8 @@ import {tap} from "rxjs/operators";
 import {noop, pipe} from "rxjs";
 import {Router} from "@angular/router";
 import { AuthState } from '../reducers';
+import { login } from '../auth.actions';
+import { User } from '../model/user.model';
 
 @Component({
   selector: 'login',
@@ -38,13 +40,15 @@ export class LoginComponent implements OnInit {
 
   login() {
     const val = this.form.value
-    this.auth.login(val.email,val.password).subscribe(noop,
-      pipe(
-          this.store.dispatch()
-        tap(user=>{
-            this.router.navigateByUrl("/courses")
-        })
-      )
+    this.auth.login(val.email,val.password). pipe(
+      tap((user:User)=>{
+        console.log(user);
+        
+        this.store.dispatch(login({user:user}))
+          this.router.navigateByUrl("/courses")
+      })
+    ).subscribe(noop,
+     ()=> alert("login failed")
     )
 
   
