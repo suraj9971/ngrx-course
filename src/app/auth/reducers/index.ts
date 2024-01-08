@@ -4,8 +4,15 @@ import {
 } from '@ngrx/store';
 import { User } from '../model/user.model';
 import { AuthActions } from '../../action-types';
+import { routerReducer } from '@ngrx/router-store';
 
 export const authFeatureKey = 'auth';
+export interface Appstate{
+
+}
+export const reducers:ActionReducerMap<Appstate> = {
+  router:routerReducer
+}
 
 export interface AuthState{
   user:User
@@ -25,5 +32,7 @@ export const authReducer = createReducer(
   })
 
 )
+
+
 
 
