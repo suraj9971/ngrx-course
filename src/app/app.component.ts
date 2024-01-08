@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 import { AuthState } from './auth/reducers';
+import {isUserLoggedIn, isLoggedOut} from "./auth/auth.selector"
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,12 @@ export class AppComponent implements OnInit {
       console.log(this.store.subscribe(adta => console.log(adta)));
       
       this.isLoggedIn$ = this.store.pipe(
-          map(state=> !!state["auth"].user)
+          select(isUserLoggedIn)
         )
         console.log(this.isLoggedIn$.subscribe(data=>console.log(data)));
         
       this.isLoggedOut$ = this.store.pipe(
-        map(state=> !state["auth"].user)
+        select(isLoggedOut)
         )
 
       this.router.events.subscribe(event  => {
