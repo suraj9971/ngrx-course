@@ -56,7 +56,12 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(),
-    StoreModule.forRoot(reducers, {}),
+    StoreModule.forRoot(reducers, {runtimeChecks:{
+      strictActionImmutability:true,
+      strictActionSerializability:true,
+      strictStateImmutability:true,
+      strictStateSerializability:true
+    }},),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     EffectsModule.forRoot([AuthEffect]),
     StoreRouterConnectingModule.forRoot({
